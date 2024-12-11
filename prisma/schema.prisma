@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String    @unique
+  role     Role      @default(USER)
+  roleId   Int
+  tasks    Task[]    @relation("CreatedTasks")
+  comments Comment[]
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Task {
+  id           Int            @id @default(autoincrement())
+  title        String
+  description  String?
+  dueDate      DateTime?
+  status       TaskStatus     @relation(fields: [statusId], references: [id])
+  statusId     Int
+  createdBy    User           @relation("CreatedTasks", fields: [createdById], references: [id])
+  createdById  Int
+  subtasks     Subtask[]
+  categories   Category[]     @relation("TaskCategories")
+  attachments  Attachment[]
+  comments     Comment[]
+  TaskCategory TaskCategory[]
+}
+
+model TaskStatus {
+  id    Int    @id @default(autoincrement())
+  name  String
+  tasks Task[]
+}
+
+model Subtask {
+  id          Int     @id @default(autoincrement())
+  title       String
+  isCompleted Boolean @default(false)
+  task        Task    @relation(fields: [taskId], references: [id])
+  taskId      Int
+}
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  tasks        Task[]         @relation("TaskCategories")
+  TaskCategory TaskCategory[]
+}
+
+model TaskCategory {
+  taskId     Int
+  categoryId Int
+  task       Task     @relation(fields: [taskId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([taskId, categoryId])
+}
+
+model Attachment {
+  id      Int    @id @default(autoincrement())
+  fileUrl String
+  task    Task   @relation(fields: [taskId], references: [id])
+  taskId  Int
+}
+
+model Comment {
+  id          Int    @id @default(autoincrement())
+  content     String
+  task        Task   @relation(fields: [taskId], references: [id])
+  taskId      Int
+  createdBy   User   @relation(fields: [createdById], references: [id])
+  createdById Int
+}
