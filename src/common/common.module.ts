@@ -1,7 +1,11 @@
 import { Global, Module } from '@nestjs/common';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston'
-import { PrismaService } from './prisma.client';
+import { PrismaService } from './prisma.service';
+import { ValidationService } from './validation.service';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './exception.filter';
+
 
 @Global()  
 @Module({
@@ -18,7 +22,12 @@ import { PrismaService } from './prisma.client';
             ]
         })
     ],
-    exports:[PrismaService],
-    providers:[PrismaService]
+    exports:[PrismaService, ValidationService],
+    providers:[PrismaService, ValidationService,
+        {
+            provide:APP_FILTER,
+            useClass:HttpExceptionFilter
+        }
+    ]
 })
 export class CommonModule {}

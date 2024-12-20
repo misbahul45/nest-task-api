@@ -1,14 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { SubtasksService } from './subtasks.service';
-import { CreateSubtaskDto } from './dto/create-subtask.dto';
-import { UpdateSubtaskDto } from './dto/update-subtask.dto';
 
 @Controller('subtasks')
 export class SubtasksController {
   constructor(private readonly subtasksService: SubtasksService) {}
 
   @Post()
-  create(@Body() createSubtaskDto: CreateSubtaskDto) {
+  create(@Body() createSubtaskDto) {
     return this.subtasksService.create(createSubtaskDto);
   }
 
@@ -23,7 +21,7 @@ export class SubtasksController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubtaskDto: UpdateSubtaskDto) {
+  update(@Param('id') id: string, @Body() updateSubtaskDto) {
     return this.subtasksService.update(+id, updateSubtaskDto);
   }
 

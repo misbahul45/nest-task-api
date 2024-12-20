@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTaskStatusDto } from './dto/create-task-status.dto';
-import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 
 @Injectable()
 export class TaskStatusService {
-  create(createTaskStatusDto: CreateTaskStatusDto) {
+  create(createTaskStatusDto) {
     return 'This action adds a new taskStatus';
   }
 
@@ -16,7 +14,7 @@ export class TaskStatusService {
     return `This action returns a #${id} taskStatus`;
   }
 
-  update(id: number, updateTaskStatusDto: UpdateTaskStatusDto) {
+  update(id: number, updateTaskStatusDto) {
     return `This action updates a #${id} taskStatus`;
   }
 

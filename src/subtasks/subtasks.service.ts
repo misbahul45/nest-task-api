@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSubtaskDto } from './dto/create-subtask.dto';
-import { UpdateSubtaskDto } from './dto/update-subtask.dto';
 
 @Injectable()
 export class SubtasksService {
-  create(createSubtaskDto: CreateSubtaskDto) {
+  create(createSubtaskDto) {
     return 'This action adds a new subtask';
   }
 
@@ -16,7 +14,7 @@ export class SubtasksService {
     return `This action returns a #${id} subtask`;
   }
 
-  update(id: number, updateSubtaskDto: UpdateSubtaskDto) {
+  update(id: number, updateSubtaskDto) {
     return `This action updates a #${id} subtask`;
   }
 
