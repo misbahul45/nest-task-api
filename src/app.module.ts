@@ -4,7 +4,6 @@ import { CommonModule } from './common/common.module';
 import { TasksModule } from './tasks/tasks.module';
 import { UsersModule } from './users/users.module';
 import { SubtasksModule } from './subtasks/subtasks.module';
-import { TaskStatusModule } from './task-status/task-status.module';
 import { CommentsModule } from './comments/comments.module';
 import { ConfigModule } from '@nestjs/config';
 import { json, urlencoded } from 'express';
@@ -16,7 +15,6 @@ import { json, urlencoded } from 'express';
     TasksModule, 
     UsersModule, 
     SubtasksModule, 
-    TaskStatusModule, 
     CommentsModule,
     ConfigModule.forRoot({ isGlobal:true })
   ],

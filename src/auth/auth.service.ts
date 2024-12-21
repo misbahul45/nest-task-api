@@ -63,9 +63,8 @@ export class AuthService {
     }
 
     async ValidationLocal(dataUserSignin: AuthTypes.SIGNIN): Promise<AuthTypes.RESPON_VALIDATE_LOCAL> {
+        const user = this.validationService.validate(AUTHVALIDATION.SIGNIN, dataUserSignin);
         try {
-            const user = this.validationService.validate(AUTHVALIDATION.SIGNIN, dataUserSignin);
-    
             const findUser = await this.prisma.user.findUnique({
                 where: {
                     email: user.email,
@@ -124,7 +123,7 @@ export class AuthService {
     async signinFunction(dataUser:USER){
         const { accessToken, refreshToken }= await this.generateTokens(dataUser.id)
         const hashedRT=await hash(refreshToken)
-        console.log(hashedRT);
+
         await this.prisma.user.update({
             where:{
                 id:dataUser.id

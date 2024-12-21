@@ -7,6 +7,7 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { RefreshGuard } from './guards/refresh.guard';
 import { JwtGuard } from './guards/jwt.guard';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -16,6 +17,7 @@ export class AuthController {
     private readonly logger: Logger,
   ) {}
 
+  @Public()
   @Post('signup')
   async signup(@Body() body:AuthTypes.SIGNUP) : Promise<WebResponse<AuthTypes.RESPON_SIGNUP>> {
     try {
@@ -37,7 +39,7 @@ export class AuthController {
     }
   }
 
-
+  @Public()
   @UseGuards(LocalGuard)
   @Post('signin')
   async signin(@Request() req:REQUEST):Promise<WebResponse<AUTHRESPONSE>>{
@@ -77,6 +79,7 @@ export class AuthController {
     }
   }
 
+  @Public()
   @UseGuards(JwtGuard) 
   @Post('signout')
   async logout(@Request() req:REQUEST):Promise<WebResponse<null>>{

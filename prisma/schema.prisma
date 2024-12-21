@@ -28,8 +28,7 @@ model Task {
   title        String
   description  String?
   dueDate      DateTime?
-  status       TaskStatus     @relation(fields: [statusId], references: [id])
-  statusId     String
+  status       TaskStatus     @default(TODO)
   createdBy    User           @relation("CreatedTasks", fields: [createdById], references: [id])
   createdById  String
   subtasks     Subtask[]
@@ -39,10 +38,10 @@ model Task {
   TaskCategory TaskCategory[]
 }
 
-model TaskStatus {
-  id    String @id @default(cuid())
-  name  String
-  tasks Task[]
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
 }
 
 model Subtask {
